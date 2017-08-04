@@ -1,0 +1,14 @@
+#include<fstream.h>
+#include<conio.h>
+#include"all.h"
+int main()
+{
+	cout<<"Hello";
+	ofstream fout1,fout2;
+	fout1.open("TEMP1.txt",ios::app);
+	fout2.open("TEMP2.txt",ios::app);
+	fout1<<"Hello";
+	fout2<<"World";
+	cin.get();
+	return 0;
+}

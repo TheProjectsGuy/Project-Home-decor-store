@@ -1,0 +1,121 @@
+//password section...
+#include "all.h"
+void getpassword(char *);
+void askpassword(),editpass();
+
+void main()
+{
+	re:
+	clrscr();
+	askpassword();
+	clrscr();
+	cout<<"\nEnter Choice"
+	    <<endl<<"\t1 to edit password ..."
+	    <<endl<<"\t2 to EXIT"
+	    <<endl<<"Enter your choice : ";
+	char ch;
+	cin.get(ch);             //stopping here
+	if (ch=='1')
+		editpass();
+	if (ch=='2') exit(0);
+	goto re;
+}
+
+void askpassword()
+{
+	char *cpass="admins",*password_user;
+	if (ofstream("PASS.BIN",ios::binary|ios::nocreate|ios::app)==0)
+		cout<<endl<<"No password file...."<<endl;
+	else
+		ifstream("PASS.BIN",ios::binary|ios::in)>>cpass;
+	ofstream("PASS.BIN",ios::out|ios::binary)<<cpass;
+	cout<<endl<<"I found : "<<cpass<<endl;
+	cout<<"Enter Password : ";	//gets(password_user);
+	password_user[0]='\0';
+	int i=0,k=false;
+	char ch;
+	ch=getch();
+	if (ch!=13)
+	{
+		password_user[0]=ch;
+		i++;
+		do
+		{
+			cout<<ch;
+			for (int j=1;j<=400;j++)
+			{
+				delay(1);
+				if (kbhit())
+				{
+					k=true;
+					ch=getch();
+					break;
+				}
+			}
+			cout<<"\b*";
+			if (k==false)
+			{
+				ch=getch();
+			}
+			if (k==true) k=false;
+			if (ch!=13)
+				password_user[i]=ch;
+			else
+				password_user[i]='\0';
+			i++;
+		}while(ch!=13);
+	}
+	else
+		password_user[0]='\0';
+	if (strcmp(cpass,password_user)==0)
+		cout<<endl<<"CONGO->->-> BINGO....."<<endl;
+	else askpassword();
+	cin.ignore();
+}
+
+void editpass()
+{
+	askpassword();
+	char *password,ch;
+	cout<<endl<<"Enter New password : ";
+	remove("PASS.BIN");
+	password[0]='\0';
+	int i=0,k=false;
+	ch=getch();
+	if (ch!=13)
+	{
+		password[0]=ch;
+		i++;
+		do
+		{
+			cout<<ch;
+			for (int j=1;j<=400;j++)
+			{
+				delay(1);
+				if (kbhit())
+				{
+					k=true;
+					ch=getch();
+					break;
+				}
+			}
+			cout<<"\b*";
+			if (k==false)
+			{
+				ch=getch();
+			}
+			if (k==true) k=false;
+			if (ch!=13)
+				password[i]=ch;
+			else
+				password[i]='\0';
+			i++;
+		}while(ch!=13);
+	}
+	else
+		password[0]='\0';
+	ofstream("PASS.BIN",ios::out|ios::binary)<<password;
+	cout<<endl<<"Done...";
+	delete password;
+	cin.get();
+}

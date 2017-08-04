@@ -1,0 +1,41 @@
+#include "all.h"
+
+int main()
+{
+	clrscr();
+	char *p;
+	bool k=false;
+	cout<<endl;
+	ifstream file("p123.bin",ios::binary|ios::in|ios::nocreate);
+	if (!file)
+	{
+		cout<<"No file Found"<<endl;
+		p="new";	//p is a junk string
+		k=true;
+		ofstream fout("p123.bin",ios::binary|ios::out);
+		fout<<p;
+		cout<<endl<<"Sent to recreated file"<<endl;
+		fout.close();
+	}
+	else
+	{
+		cout<<"File Found"<<endl;
+		file.get(p,10000000000,'\0');
+		cout<<p;
+	}
+	file.close();
+#define is ==
+	if (k is true)
+	{
+
+	}
+	cout<<endl<<endl<<"Imported : "<<p;
+	cout<<endl<<"Enter text : ";
+	gets(p);
+
+	ofstream fout("p123.bin",ios::binary|ios::out);
+	fout<<p;
+	fout.close();
+	cin.get();
+	return 0;
+}

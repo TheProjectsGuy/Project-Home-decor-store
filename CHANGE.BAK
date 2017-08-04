@@ -1,0 +1,92 @@
+#include "all.h"
+
+void _window(int x1,int x2,int y1,int y2,int color)
+{
+	int x=getbkcolor(),y=getcolor();
+	setcolor(color);
+	putpixel(x1,y1,color);
+	putpixel(x1,y2,color);
+	putpixel(x2,y1,color);
+	putpixel(x2,y2,color);
+	line(x1,y1,x2,y1);
+	line(x2,y1,x2,y2);
+	line(x2,y2,x1,y2);
+	line(x1,y2,x1,y1);
+	setcolor(y);
+	setbkcolor(x);
+}
+
+void shade(int border_color,int color_tofill)
+{
+	int x=getx(),y=gety();
+	setfillstyle(SOLID_FILL,color_tofill);
+	floodfill(x,y,border_color);
+}
+
+int main()
+{
+	clrscr();
+	int dm = DETECT,dg;
+	initgraph(&dm,&dg,"C:\\TC\\BGI");
+	setbkcolor(RED);
+	long amount,calc;
+	cout<<endl<<"Enter Bill Amount : ";
+	cin>>amount;
+	//here
+	char ch,str[10];
+	str[0]='\0';
+	char *strn;
+	strn[0]='\0';
+	outtextxy(getmaxx()/2-100,getmaxy()/2+20,"BALANCE : ");
+	cout<<endl<<"Enter Amount : ";
+	do
+	{
+		ch=getch();
+		if (isdigit(ch))
+		{
+			cout<<ch;
+			char cha[2];
+			cha[0]=ch;
+			cha[1]='\0';
+			strcat(str,cha);
+			calc=atol(str);
+			_window(getmaxx()/2,getmaxx()/2+150,getmaxy()/2,getmaxy()/2+50,BLUE);
+			moveto(getmaxx()/2+20,getmaxy()/2+20);
+			shade(BLUE,WHITE);
+			setcolor(RED);
+			ltoa(amount-calc,strn,10);
+			if (amount-calc==0)
+				shade(BLUE,GREEN);
+			else if (amount-calc<0)
+				shade(BLUE,YELLOW);
+			else
+				shade(BLUE,CYAN);
+			if (strlen(strn)>=9) ch='c';
+			else
+			outtextxy(getmaxx()/2+20,getmaxy()/2+20,strn);
+		}
+		if (ch==8||ch=='c'||ch=='C')
+		{
+			for (int j=0;j<strlen(str);j++) cout<<"\b \b";
+			strn[0]='\0';
+			str[0]='\0';
+		}
+		if (ch==13&&amount-calc>0)
+		{
+			for (int j=1;j<=50;j++)
+			{       rer:
+				int r=random(6);
+				if (r==BLUE) goto rer;
+				shade(BLUE,r);
+				outtextxy(getmaxx()/2+20,getmaxy()/2+20,strn);
+				delay(10);
+			}
+			shade(BLUE,CYAN);
+			outtextxy(getmaxx()/2+20,getmaxy()/2+20,strn);
+			ch=' ';
+		}
+	}while(ch!=13);
+	cin.get();
+	cin.get();
+	return 0;
+}

@@ -1,0 +1,44 @@
+#include "all.h"
+
+int main()
+{
+	clrscr();
+	cout<<"Enter Password : ";
+	//CODE TO BE COPIED
+	char password[20],ch;
+	password[0]='\0';
+	int i=0,k=false;
+	ch=getch();
+	password[0]=ch;
+	i++;
+	do
+	{
+		cout<<ch;
+		for (int j=1;j<=500;j++)
+		{
+			delay(1);
+			if (kbhit())
+			{
+				k=true;
+				ch=getch();
+				break;
+			}
+		}
+		cout<<"\b*";
+		if (k==false)
+		{
+			ch=getch();
+		}
+		if (k==true) k=false;
+		if (ch!=13)
+			password[i]=ch;
+		else
+			password[i]='\0';
+		i++;
+	}while(ch!=13);
+	//TILL HERE with a return password
+	cout<<endl<<"Password : "<<password;
+	cin.get();
+	cin.get();
+	return 0;
+}

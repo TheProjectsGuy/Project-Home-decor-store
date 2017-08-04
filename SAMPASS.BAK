@@ -1,0 +1,36 @@
+#include "all.h"
+
+int main()
+{
+	char ch,pass[20];
+	clrscr();
+	char ch1;
+	cout<<"\nEnter something : ";
+	ch1=getch();
+	cout<<int(ch1)<<endl<<"\""<<ch1<<"\""<<endl;
+	cout<<"\nContinue ? : ";
+	ch=getch();
+	if (ch=='n'||ch=='N')
+	{
+		exit(0);
+	}
+	cout<<"Enter Password : ";
+	int i=0;
+	do
+	{
+		ch=cin.get();
+		if (ch=='\n')
+		{
+			pass[i]='\0';
+		}
+		else
+		{
+			cout<<"*";
+			pass[i++]=ch;
+		}
+	}while (ch!='\n');
+	cout<<"\nI'm out";
+	cout<<endl<<pass;
+	cin.get();cin.get();
+	return 0;
+}
